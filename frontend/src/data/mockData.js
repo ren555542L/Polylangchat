@@ -1,0 +1,291 @@
+export const MOCK_CURRENT_USER = {
+  id: "user_me_001",
+  username: "Talan Septimus",
+  email: "talan.septimus@polyglot.ai",
+  preferredLanguage: "en",
+  avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+  bio: "Polyglot user • Product Designer & Architect",
+  status: "Online",
+};
+
+export const MOCK_USERS = [
+  {
+    id: "user_002",
+    username: "Aarav Sharma",
+    email: "aarav.sharma@example.com",
+    preferredLanguage: "hi",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    bio: "Software Engineer from New Delhi 🇮🇳",
+    online: true,
+    lastSeen: "Online now",
+    phone: "+91 98765 43210",
+  },
+  {
+    id: "user_003",
+    username: "Priya Sundaram",
+    email: "priya.sundaram@example.com",
+    preferredLanguage: "ta",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
+    bio: "AI Researcher in Chennai 🌸",
+    online: true,
+    lastSeen: "Online now",
+    phone: "+91 94440 12345",
+  },
+  {
+    id: "user_004",
+    username: "Devjit Mukherjee",
+    email: "devjit.m@example.com",
+    preferredLanguage: "bn",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    bio: "Fullstack dev & open-source enthusiast from Kolkata",
+    online: false,
+    lastSeen: "2 hours ago",
+    phone: "+91 98300 67890",
+  },
+  {
+    id: "user_005",
+    username: "Kavya Patel",
+    email: "kavya.patel@example.com",
+    preferredLanguage: "gu",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80",
+    bio: "Entrepreneur & UI enthusiast from Ahmedabad",
+    online: true,
+    lastSeen: "Online now",
+    phone: "+91 99250 11223",
+  },
+  {
+    id: "user_006",
+    username: "Rohan Deshmukh",
+    email: "rohan.deshmukh@example.com",
+    preferredLanguage: "hi-Latn",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
+    bio: "Living between Mumbai & Bangalore. Tech & Coffee ☕",
+    online: false,
+    lastSeen: "Yesterday",
+    phone: "+91 98200 99887",
+  },
+  {
+    id: "user_007",
+    username: "Ananya Reddy",
+    email: "ananya.reddy@example.com",
+    preferredLanguage: "te",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
+    bio: "Design systems advocate from Hyderabad ⚡",
+    online: true,
+    lastSeen: "Online now",
+    phone: "+91 94900 55667",
+  },
+];
+
+export const MOCK_CONVERSATIONS = [
+  {
+    id: "conv_001",
+    participant: MOCK_USERS[0], // Aarav Sharma
+    lastMessage: {
+      text: "Kal milte hain! Sab taiyari ho chuki hai.",
+      translatedText: "See you tomorrow! All preparations are done.",
+      sourceLanguage: "hi-Latn",
+      timestamp: "10:42 AM",
+      isSelf: false,
+    },
+    unreadCount: 2,
+    pinned: true,
+  },
+  {
+    id: "conv_002",
+    participant: MOCK_USERS[1], // Priya Sundaram
+    lastMessage: {
+      text: "நாளை காலை மீட்டிங் உறுதி செய்யப்பட்டுள்ளது.",
+      translatedText: "Tomorrow morning meeting is confirmed.",
+      sourceLanguage: "ta",
+      timestamp: "09:18 AM",
+      isSelf: false,
+    },
+    unreadCount: 0,
+    pinned: true,
+  },
+  {
+    id: "conv_003",
+    participant: MOCK_USERS[2], // Devjit Mukherjee
+    lastMessage: {
+      text: "I shared the API documentation link.",
+      translatedText: null,
+      sourceLanguage: "en",
+      timestamp: "Yesterday",
+      isSelf: true,
+    },
+    unreadCount: 0,
+    pinned: false,
+  },
+  {
+    id: "conv_004",
+    participant: MOCK_USERS[3], // Kavya Patel
+    lastMessage: {
+      text: "નમસ્તે! પ્રોજેક્ટ અપડેટ ખૂબ સરસ છે.",
+      translatedText: "Hello! The project update is really great.",
+      sourceLanguage: "gu",
+      timestamp: "Yesterday",
+      isSelf: false,
+    },
+    unreadCount: 0,
+    pinned: false,
+  },
+  {
+    id: "conv_005",
+    participant: MOCK_USERS[4], // Rohan Deshmukh
+    lastMessage: {
+      text: "Haan bhai, deployment package ready hai.",
+      translatedText: "Yes brother, the deployment package is ready.",
+      sourceLanguage: "hi-Latn",
+      timestamp: "3 days ago",
+      isSelf: false,
+    },
+    unreadCount: 0,
+    pinned: false,
+  },
+  {
+    id: "conv_006",
+    participant: MOCK_USERS[5], // Ananya Reddy
+    lastMessage: {
+      text: "డిజైన్ సిస్టమ్ టోకెన్స్ అన్నీ అప్‌డేట్ చేసాము.",
+      translatedText: "We updated all design system tokens.",
+      sourceLanguage: "te",
+      timestamp: "Oct 18",
+      isSelf: false,
+    },
+    unreadCount: 0,
+    pinned: false,
+  },
+];
+
+export const MOCK_MESSAGES_MAP = {
+  conv_001: [
+    {
+      _id: "msg_101",
+      conversationId: "conv_001",
+      senderId: "user_002",
+      originalText: "नमस्ते! प्रोजेक्ट का स्टेटस क्या है?",
+      sourceLanguage: "hi",
+      createdAt: new Date(Date.now() - 3600000 * 3).toISOString(),
+      translation: {
+        targetLanguage: "en",
+        translatedText: "Hello! What is the status of the project?",
+        translationStatus: "completed",
+        modelName: "ai4bharat/indictrans2-en-indic-dist-200M",
+      },
+      reactions: ["👍"],
+    },
+    {
+      _id: "msg_102",
+      conversationId: "conv_001",
+      senderId: "user_me_001",
+      originalText: "Hey Aarav! Frontend UI architecture is in progress and looking great.",
+      sourceLanguage: "en",
+      createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
+      translation: null,
+      status: "read",
+    },
+    {
+      _id: "msg_103",
+      conversationId: "conv_001",
+      senderId: "user_002",
+      originalText: "बहुत बढ़िया! क्या ट्रांसलेशन का रियल-टाइम टेस्ट कर सकते हैं?",
+      sourceLanguage: "hi",
+      createdAt: new Date(Date.now() - 3600000 * 1.5).toISOString(),
+      translation: {
+        targetLanguage: "en",
+        translatedText: "Great! Can we do a real-time test of the translation?",
+        translationStatus: "completed",
+        modelName: "ai4bharat/indictrans2-en-indic-dist-200M",
+      },
+    },
+    {
+      _id: "msg_104",
+      conversationId: "conv_001",
+      senderId: "user_me_001",
+      originalText: "Yes, our Socket.IO and translation bridge handles all 11 languages seamlessly.",
+      sourceLanguage: "en",
+      createdAt: new Date(Date.now() - 3600000 * 1).toISOString(),
+      translation: null,
+      status: "read",
+    },
+    {
+      _id: "msg_105",
+      conversationId: "conv_001",
+      senderId: "user_002",
+      originalText: "Love it! Great board!",
+      sourceLanguage: "en",
+      createdAt: new Date(Date.now() - 3600000 * 0.5).toISOString(),
+      translation: null,
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&auto=format&fit=crop&q=80",
+    },
+    {
+      _id: "msg_106",
+      conversationId: "conv_001",
+      senderId: "user_002",
+      originalText: "Kal milte hain! Sab taiyari ho chuki hai.",
+      sourceLanguage: "hi-Latn",
+      createdAt: new Date(Date.now() - 60000 * 10).toISOString(),
+      translation: {
+        targetLanguage: "en",
+        translatedText: "See you tomorrow! All preparations are done.",
+        translationStatus: "completed",
+        modelName: "ai4bharat/indictrans2-en-indic-dist-200M",
+      },
+      reactions: ["🔥", "❤️"],
+    },
+  ],
+  conv_002: [
+    {
+      _id: "msg_201",
+      conversationId: "conv_002",
+      senderId: "user_003",
+      originalText: "வணக்கம்! புதிய பதிப்பு தயாரா?",
+      sourceLanguage: "ta",
+      createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),
+      translation: {
+        targetLanguage: "en",
+        translatedText: "Hello! Is the new version ready?",
+        translationStatus: "completed",
+        modelName: "ai4bharat/indictrans2-en-indic-dist-200M",
+      },
+    },
+    {
+      _id: "msg_202",
+      conversationId: "conv_002",
+      senderId: "user_me_001",
+      originalText: "Yes Priya! We are finishing the responsive layout tests right now.",
+      sourceLanguage: "en",
+      createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
+      translation: null,
+      status: "read",
+    },
+    {
+      _id: "msg_203",
+      conversationId: "conv_002",
+      senderId: "user_003",
+      originalText: "நாளை காலை மீட்டிங் உறுதி செய்யப்பட்டுள்ளது.",
+      sourceLanguage: "ta",
+      createdAt: new Date(Date.now() - 3600000 * 1).toISOString(),
+      translation: {
+        targetLanguage: "en",
+        translatedText: "Tomorrow morning meeting is confirmed.",
+        translationStatus: "completed",
+        modelName: "ai4bharat/indictrans2-en-indic-dist-200M",
+      },
+    },
+  ],
+};
+
+export const MOCK_SHARED_MEDIA = [
+  { id: "m1", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&auto=format&fit=crop&q=80", type: "image", title: "Sunset Preview" },
+  { id: "m2", url: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&auto=format&fit=crop&q=80", type: "image", title: "Hardware Test" },
+  { id: "m3", url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80", type: "image", title: "Global Network" },
+  { id: "m4", url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=300&auto=format&fit=crop&q=80", type: "image", title: "Code Matrix" },
+];
+
+export const MOCK_SHARED_FILES = [
+  { id: "f1", name: "Polyglot_Architecture_v2.pdf", size: "3.4 MB", ext: "PDF", date: "Today" },
+  { id: "f2", name: "Translation_Benchmarks.xlsx", size: "850 KB", ext: "XLSX", date: "Oct 20" },
+  { id: "f3", name: "IndicTrans2_Vocab_Spec.docx", size: "1.2 MB", ext: "DOCX", date: "Oct 18" },
+];
