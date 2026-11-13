@@ -1,100 +1,76 @@
 Polyglot Chat
-Polyglot Chat is a multilingual messaging application designed to let people communicate in the language they are comfortable writing in, while allowing the recipient to read the message in their preferred language.
+Real-time multilingual messaging with language-aware translation.
 
-The project is currently being developed and tested locally. Its current focus is real-time messaging, user language preferences, and integrating a self-hosted translation service.
-Project status: In development. Login, signup, the chat window, and language preference functionality are implemented. The chat list and profile settings are still incomplete. English ↔ Hindi translation has been tested, but translation quality and behaviour still need improvement.
+Polyglot Chat is a multilingual messaging application designed to reduce language barriers in one-to-one communication. Users can choose a preferred language and communicate with people who use another language.
 
-Features implemented so far
-- Authentication: Login and signup flows are implemented.
-- Language preferences: Users can select a preferred language.
-- Chat window: The messaging interface is implemented.
-- Real-time messaging: The backend uses Socket.IO for message delivery between users.
-- Message persistence: Messages are stored in MongoDB.
-- Message acknowledgements: The sender receives a server acknowledgement, and optimistic messages are reconciled with server-confirmed messages.
-- Duplicate/echo handling: Client-side message handling and server-side broadcasting have been adjusted to avoid treating a sender's own message as a new incoming message.
-- Connection recovery work: Socket reconnection status and conversation-room rejoining have been addressed in the current implementation.
-- Translation service: A separate FastAPI service is used for translation. English-to-Hindi and Hindi-to-English have been tested successfully.
-The latest debugging report records the connection-recovery and message-delivery regression checks as passing. Re-run the checks below against the current code whenever the socket or messaging flow changes.
-Current limitations and unfinished work
-- The chat list is not yet complete.
-- Profile settings are not yet implemented.
-- Translation needs further improvement. Successful English ↔ Hindi tests do not imply that every translation is accurate or that all listed languages are supported end to end.
-- The app is currently being run locally; a deployed environment has not been documented here.
-- Screenshots are not included yet.
-- A project license has not been selected yet.
+The application is being developed with a separate frontend, backend, and translation service. Its translation approach uses self-hosted, open-source models rather than depending on a hosted translation API.
+Development status: This project is under active development and currently runs locally. English-to-Hindi and Hindi-to-English translation have been successfully tested; the translation service still needs improvement.
+
+Core idea
+A sender writes a message in their language, and the recipient should be able to receive it in their preferred language.
+
+The initial language focus is English, Hindi, Hinglish, and selected Indian languages. Language support should be considered available only where it has been implemented and tested.
+Current implementation status
+Component / feature	Status
+User login	Implemented
+User signup	Implemented
+Chat window	Implemented
+Language preference	Implemented
+Chat list	Not implemented
+Profile settings	Not implemented
+English → Hindi translation	Successfully tested; needs improvement
+Hindi → English translation	Successfully tested; needs improvement
+Local development	Current setup
+
+
 Technology stack
-Area	Technology
-Frontend	React, Vite
-Backend	Node.js, Express
+Layer	Technologies
+Frontend	React
+Backend	Node.js, Express.js
+Database	MongoDB
 Real-time communication	Socket.IO
-Database	MongoDB Atlas, Mongoose
-Translation API	Python, FastAPI
-Translation model work	AI4Bharat IndicTrans2
+Translation service	Python, FastAPI
+Translation model	AI4Bharat IndicTrans2 (English-to-Indic model)
 
 
-The translation service is maintained separately from the Node.js backend.
+Architecture
+The project is organized into three services:
+- Frontend: React application for user interaction and the chat interface.
+- Backend: Node.js and Express.js application using MongoDB for persistence and Socket.IO for real-time communication.
+- Translator: Separate Python/FastAPI service for translation using self-hosted models.
+Keeping translation in a separate service allows it to be developed and tested independently from the messaging backend.
 Project structure
-The local project is organised into three main application directories:
+The repository is organized into the following top-level services:
 ProjectReal/
-├── frontend/       # React + Vite application
-├── backend/        # Node.js + Express + Socket.IO server
-└── translator/     # Python + FastAPI translation service
+├── frontend/
+├── backend/
+├── translator/
+└── .gitignore
+Each service has its own dependencies and development workflow.
 Local development
-From the ProjectReal repository root, run each service in a separate terminal. The commands below reflect the current local development setup. They assume the project dependencies and the translator virtual environment have already been installed.
-1. Backend
-cd .\backend
-node src/server.js
-The backend uses port 5000 in the current local configuration.
-2. Frontend
-cd .\frontend
-npm run dev
-The current frontend origin used by the backend is http://localhost:5173.
-3. Translation service
-cd .\translator
-.\venv\Scripts\Activate.ps1
-python -m uvicorn main:app --host 127.0.0.1 --port 8001
-The translation API is available locally at http://127.0.0.1:8001 when the service starts successfully.
-- Health endpoint: http://127.0.0.1:8001/health
-- Interactive API documentation: http://127.0.0.1:8001/docs
-Environment configuration
-The backend uses environment variables for its local configuration. Create a backend .env file and provide your own values for the secrets and database connection string.
+The application is currently intended for local development. The configuration below documents the known backend environment variables; it does not assume frontend or translator commands that have not yet been confirmed.
+Backend environment variables
+Create a .env file in the backend directory and configure:
 PORT=5000
 CLIENT_ORIGIN=http://localhost:5173
 NODE_ENV=development
+
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-JWT_EXPIRES_IN=your_token_expiry_setting
-
-# Test tokens, if required by your local test setup
+JWT_EXPIRES_IN=your_token_expiry
+The following variables have also been used for testing:
 TEST_JWT=your_test_token
 TEST_JWT_B=your_second_test_token
-Do not commit .env files, database credentials, JWT secrets, or test tokens. Keep real values in your local environment and provide a sanitized example file when sharing configuration.
-Messaging and connection behaviour
-The current real-time messaging flow is:
-1. The user submits a message from the frontend.
-2. The frontend displays an optimistic message while the send operation is pending.
-3. The client emits message:send through Socket.IO.
-4. The backend validates and persists the message.
-5. The backend acknowledges the sender and broadcasts message:new to the other members of the conversation room.
-6. The frontend reconciles the optimistic message with the server-confirmed message.
-7. Translation is handled separately and delivered through the translation event flow.
-The application does not currently implement offline message queuing. A send attempted while the socket is disconnected should be treated as failed rather than silently shown as delivered. A user can deliberately retry a failed message.
+Use test tokens only in the appropriate local testing environment. Do not commit .env files, real credentials, JWTs, or database connection strings.
+Running the services
+Install and run each service using its own project configuration and scripts. Exact commands for the frontend, backend, and translator will be added once the current package.json scripts and Python dependency setup have been confirmed.
+Translation
+The translation service is built separately from the Node.js backend using Python and FastAPI.
 
-On reconnection, the client needs to restore its conversation-room membership. This is important because a newly established server-side Socket.IO connection does not retain the room memberships of the previous connection.
-Development regression checks
-Run these checks after making changes to Socket.IO, the chat context, message persistence, or connection handling:
-- Send a message from Admin to Aryan and verify it appears exactly once.
-- Send a message from Aryan to Admin and verify it appears exactly once.
-- Send the same text twice and verify that they remain two distinct messages.
-- Send several messages quickly and verify their order.
-- Disconnect one browser session and verify that its status changes to reconnecting/offline as appropriate.
-- Restore its network and verify automatic reconnection and conversation-room rejoining.
-- Send a message after reconnection and verify exactly one delivery, with no automatic reply.
-- Attempt to send while disconnected and verify that the message is not falsely marked as sent.
-For clearer isolation, use two separate browser profiles or separate devices for the two test accounts. A single browser profile can share application state between tabs, so it is less suitable for testing independent user sessions.
-Translation status
-English-to-Hindi and Hindi-to-English translation have been tested successfully through the current translation work. Translation still needs improvement, and no claim is made here that all Indian languages or Hinglish are fully supported end to end.
-
-The translation service uses a separate FastAPI application, with AI4Bharat IndicTrans2 involved in the current model setup.
+The current model work includes AI4Bharat's IndicTrans2 English-to-Indic model. English-to-Hindi and Hindi-to-English translation have both been successfully tested. Translation quality and service integration are still being improved.
+Development notes
+- The project prioritizes self-hosted, open-source translation models.
+- The frontend, backend, and translator are maintained as separate components.
+- Implemented features are distinguished from planned or unfinished work in this README.
 License
-No license has been selected for this project yet. Until a license is added to the repository, do not assume that the source code is available for reuse, redistribution, or modification by others.
+No license has been selected yet. Until a license is added to the repository, all rights are reserved by default; do not assume the project is available for reuse under an open-source license.
